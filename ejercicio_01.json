@@ -1,0 +1,278 @@
+[
+    {
+        "id": "078df6da93dd61ab",
+        "type": "tab",
+        "label": "Ejercicio 01",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a7b9fd85f4e56602",
+        "type": "mqtt in",
+        "z": "078df6da93dd61ab",
+        "name": "FerFer",
+        "topic": "FerFer",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "923c1d2c2238abd0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 320,
+        "wires": [
+            [
+                "8688eb9047c0d94a",
+                "2d4af4eb87fd5da3",
+                "3921a80ea1ae0737"
+            ]
+        ]
+    },
+    {
+        "id": "8688eb9047c0d94a",
+        "type": "function",
+        "z": "078df6da93dd61ab",
+        "name": "Insertar",
+        "func": "if(msg.topic === \"FerFer\" && !isNaN(msg.payload)){\n    msg.topic = \"INSERT INTO tbl_temperatura(temperatura, descripcion)\"\n        + \"VALUES(\" + msg.payload + \", 'Insercion desde MQTT')\";\n} else {\n    msg.topic = \"\";\n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 340,
+        "wires": [
+            [
+                "13e2994bab5305ce"
+            ]
+        ]
+    },
+    {
+        "id": "13e2994bab5305ce",
+        "type": "mysql",
+        "z": "078df6da93dd61ab",
+        "mydb": "3c39a513cbf25644",
+        "name": "Base de datos",
+        "x": 680,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2d4af4eb87fd5da3",
+        "type": "ui_gauge",
+        "z": "078df6da93dd61ab",
+        "name": "Temperatura",
+        "group": "569a5ad44305d040",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "gtype": "gage",
+        "title": "Cálculo de Temperatura",
+        "label": "C",
+        "format": "{{value}} °C",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#3152b4",
+            "#458a00",
+            "#ca3838"
+        ],
+        "seg1": "10",
+        "seg2": "30",
+        "diff": false,
+        "className": "",
+        "x": 450,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "3921a80ea1ae0737",
+        "type": "ui_chart",
+        "z": "078df6da93dd61ab",
+        "name": "Histórico",
+        "group": "73d5a9a2df0f67f6",
+        "order": 0,
+        "width": "6",
+        "height": "4",
+        "label": "Histórico",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "bezier",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#6e49f3",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 440,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "30104a43d4da2327",
+        "type": "comment",
+        "z": "078df6da93dd61ab",
+        "name": "MQTT SUB",
+        "info": "# Topico\n\n```FerFer```",
+        "x": 210,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "94920805b49005bf",
+        "type": "mqtt in",
+        "z": "078df6da93dd61ab",
+        "name": "FerHume",
+        "topic": "FerHume",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "923c1d2c2238abd0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 480,
+        "wires": [
+            [
+                "c1b3cd7101aca547",
+                "3921a80ea1ae0737"
+            ]
+        ]
+    },
+    {
+        "id": "c1b3cd7101aca547",
+        "type": "ui_gauge",
+        "z": "078df6da93dd61ab",
+        "name": "Humedad",
+        "group": "569a5ad44305d040",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "donut",
+        "title": "Humedad",
+        "label": "",
+        "format": "{{value}} %",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#fff700",
+            "#00ff04",
+            "#2e74ff"
+        ],
+        "seg1": "30",
+        "seg2": "60",
+        "diff": false,
+        "className": "",
+        "x": 440,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "e349ee08f9b85f40",
+        "type": "comment",
+        "z": "078df6da93dd61ab",
+        "name": "GDS0551",
+        "info": "# Fernando Martínez Rodríguez\n# 1222100465",
+        "x": 460,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "923c1d2c2238abd0",
+        "type": "mqtt-broker",
+        "name": "Server",
+        "broker": "127.0.0.1",
+        "port": "1883",
+        "clientid": "edm",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "30",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "3c39a513cbf25644",
+        "type": "MySQLdatabase",
+        "name": "Server DB",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "iot_db",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "569a5ad44305d040",
+        "type": "ui_group",
+        "name": "Información ",
+        "tab": "2af2ed9a4f181772",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "73d5a9a2df0f67f6",
+        "type": "ui_group",
+        "name": "Histórico de Datos",
+        "tab": "2af2ed9a4f181772",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "2af2ed9a4f181772",
+        "type": "ui_tab",
+        "name": "IoT",
+        "icon": "github-circle",
+        "disabled": false,
+        "hidden": false
+    }
+]
